@@ -1,9 +1,9 @@
 # electron-presentation-server
-### _Your Name <your.name@example.com>_
+### _mikel evins <mikel@evins.net>_
 
-This is a project to do ... something.
+A work in progress: an experimental presentation server for Lisp programs, implemented with Electron.
 
 ## License
 
-Specify license here
+Apache-2.0
 
