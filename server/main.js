@@ -1,6 +1,8 @@
 // the presentation server main process
 
 const { app, BrowserWindow } = require('electron')
+const http                   = require('http');
+const WebSocket              = require('ws');
 
 function createWindow () {
   const win = new BrowserWindow({
