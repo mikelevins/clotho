@@ -1,4 +1,9 @@
-# Electron Presentation Server
-v0.0.1
+# electron-presentation-server
+### _Your Name <your.name@example.com>_
 
-This project is an experimental presentation server for Lisp programs, implemented using Electron.
+This is a project to do ... something.
+
+## License
+
+Specify license here
+
