@@ -1,14 +1,15 @@
 {
-  "name": "presentation-server",
-  "version": "0.0.1",
-  "description": "A presentation server application for Lisp programs.",
-  "main": "main.js",
-  "scripts": {
-    "test": "test"
-  },
-  "author": "mikel evins <mikel@evins.net>",
-  "license": "Apache-2.0",
-  "devDependencies": {
-    "electron": "^15.1.2"
-  }
+    "name": "presentation-server",
+    "version": "0.0.1",
+    "description": "A presentation server application for Lisp programs.",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron .",
+        "test": "test"
+    },
+    "author": "mikel evins <mikel@evins.net>",
+    "license": "Apache-2.0",
+    "devDependencies": {
+        "electron": "^15.1.2"
+    }
 }
