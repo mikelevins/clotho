@@ -4,7 +4,7 @@
   :description "An experimental presentation server for Lisp in Electron"
   :author "mikel evins <mikel@evins.net>"
   :license  "Apache 2.0"
-  :version "0.0.1"
+  :version "0.0.2"
   :serial t
   :components ((:module "src"
                         :serial t
