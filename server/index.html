@@ -8,6 +8,35 @@
         <title>Presentation Server</title>
     </head>
     <body>
+        <script>
+         window.RemoteJS = {};
+         var RemoteJS = window.RemoteJS;
+
+         RemoteJS.send = function(data) {
+             RemoteJS.ws.send(data);
+         };
+
+         RemoteJS.connect = function() {
+             var ws  = new WebSocket("ws://0.0.0.0:40000/");
+
+             ws.onmessage = function(evt) {
+                 (1, eval)(evt.data);
+             };
+
+             ws.onopen = function() {
+                 RemoteJS.send('connected');
+             };
+
+             ws.onclose = function() {
+                 setTimeout(RemoteJS.connect, 1);
+             };
+
+             RemoteJS.ws = ws;
+         };
+
+         RemoteJS.connect();
+        </script>
+        
         <h1>Presentation Server</h1>
         We are using Node.js <span id="node-version"></span>,
         Chromium <span id="chrome-version"></span>,

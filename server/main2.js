@@ -13,8 +13,7 @@ function createWindow () {
     height: 600
   })
 
-  // TODO: generate the port number in the server and pass it to Electron on launch
-  win.loadURL('http://127.0.0.1:10102/index.html')
+  win.loadFile('index.html')
 }
 
 app.whenReady().then(createWindow)
