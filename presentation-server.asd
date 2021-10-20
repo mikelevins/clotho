@@ -1,5 +1,10 @@
 ;;;; presentation-server.asd
 
+;;; enable hunchentoot to function without ssl
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (pushnew :HUNCHENTOOT-NO-SSL *features*))
+
+
 (asdf:defsystem #:presentation-server
   :description "An experimental presentation server for Lisp in Electron"
   :author "mikel evins <mikel@evins.net>"
