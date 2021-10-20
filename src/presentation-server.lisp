@@ -31,7 +31,7 @@
 #+win32
 (defun launch-presentation-server ()
   ;; TODO: use find-port to get an open port, pass it to the Electron process on launch
-  (setf *remote-js-context* (remote-js:make-context :port *websocket-port*))
+  (setf *remote-js-context* (remote-js:make-context :address "127.0.0.1" :port *websocket-port*))
   (hunchentoot:start *presentation-server*)
   (remote-js:start *remote-js-context*)
   (let* ((exepath "server/presentation-server-win32-x64/presentation-server.exe")
