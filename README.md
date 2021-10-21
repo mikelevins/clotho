@@ -20,7 +20,7 @@ An experimental presentation server for Lisp programs, implemented with Electron
 
 4. Build the presentation-server application
    cd into the server directory in electron-presentation-server
-   run the build script (build.sh on macOS; build.bat on Windows)
+   run the build script (build.sh on macOS and Linux; build.bat on Windows)
 
 5. Load the Lisp code
    Run SBCL and load presentation-server.asd
