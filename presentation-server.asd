@@ -17,7 +17,7 @@
                         :components ((:file "package")
                                      (:file "presentation-server")))))
 
-#+darwin
+#+(or darwin linux)
 (defun build-presentation-server ()
   (format t "~%building presentation-server...")
   (let* ((start-time (get-internal-real-time))
@@ -40,7 +40,7 @@
                       internal-time-units-per-second)))))
 
 
-#+darwin
+#+(or darwin linux)
 (defun remove-presentation-server-build ()
   (let ((working-directory (asdf:system-relative-pathname :presentation-server "server/"))
         (clean-sh (asdf:system-relative-pathname :presentation-server "server/clean.sh")))
@@ -52,6 +52,7 @@
   (let ((working-directory (asdf:system-relative-pathname :presentation-server "server/"))
         (clean-bat (asdf:system-relative-pathname :presentation-server "server/clean.bat")))
     (sb-ext:run-program clean-bat () :directory working-directory)))
+
 
 #+(or nil)(asdf:load-system :presentation-server)
 #+(or nil)(build-presentation-server)

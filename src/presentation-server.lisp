@@ -28,6 +28,16 @@
          (server-path (namestring (asdf:system-relative-pathname :presentation-server exepath))))
     (setf *presentation-server* (uiop:launch-program server-path))))
 
+#+linux
+(defun launch-presentation-server ()
+  ;; TODO: use find-port to get an open port, pass it to the Electron process on launch
+  (setf *remote-js-context* (remote-js:make-context :port *websocket-port*))
+  (hunchentoot:start *presentation-server*)
+  (remote-js:start *remote-js-context*)
+  (let* ((exepath "server/presentation-server-linux-x64/presentation-server")
+         (server-path (namestring (asdf:system-relative-pathname :presentation-server exepath))))
+    (setf *presentation-server* (uiop:launch-program server-path))))
+
 #+win32
 (defun launch-presentation-server ()
   ;; TODO: use find-port to get an open port, pass it to the Electron process on launch
