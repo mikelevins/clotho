@@ -43,7 +43,7 @@
 #+darwin
 (defun remove-presentation-server-build ()
   (let ((working-directory (asdf:system-relative-pathname :presentation-server "server/"))
-        (clean-bat (asdf:system-relative-pathname :presentation-server "server/clean.sh")))
+        (clean-sh (asdf:system-relative-pathname :presentation-server "server/clean.sh")))
     (sb-ext:run-program clean-sh () :directory working-directory)))
 
 
