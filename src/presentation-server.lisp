@@ -5,7 +5,8 @@
 (defparameter *http-port* 10102)
 (defparameter *websocket-port* 10101)
 
-(defparameter *presentation-server* (make-instance 'hunchentoot:easy-acceptor :port *http-port*))
+(defparameter *http-server* (make-instance 'hunchentoot:easy-acceptor :port *http-port*))
+(defparameter *presentation-application* nil)
 (defparameter *remote-js-context* nil)
 
 (hunchentoot:define-easy-handler (index :uri "/index.html") ()
@@ -22,7 +23,7 @@
 (defun launch-presentation-server ()
   ;; TODO: use find-port to get an open port, pass it to the Electron process on launch
   (setf *remote-js-context* (remote-js:make-context :port *websocket-port*))
-  (hunchentoot:start *presentation-server*)
+  (hunchentoot:start *http-server*)
   (remote-js:start *remote-js-context*)
   (let* ((exepath "server/presentation-server-darwin-x64/presentation-server.app/Contents/MacOS/presentation-server")
          (server-path (namestring (asdf:system-relative-pathname :presentation-server exepath))))
@@ -32,7 +33,7 @@
 (defun launch-presentation-server ()
   ;; TODO: use find-port to get an open port, pass it to the Electron process on launch
   (setf *remote-js-context* (remote-js:make-context :port *websocket-port*))
-  (hunchentoot:start *presentation-server*)
+  (hunchentoot:start *http-server*)
   (remote-js:start *remote-js-context*)
   (let* ((exepath "server/presentation-server-linux-x64/presentation-server")
          (server-path (namestring (asdf:system-relative-pathname :presentation-server exepath))))
@@ -42,7 +43,7 @@
 (defun launch-presentation-server ()
   ;; TODO: use find-port to get an open port, pass it to the Electron process on launch
   (setf *remote-js-context* (remote-js:make-context :address "127.0.0.1" :port *websocket-port*))
-  (hunchentoot:start *presentation-server*)
+  (hunchentoot:start *http-server*)
   (remote-js:start *remote-js-context*)
   (let* ((exepath "server/presentation-server-win32-x64/presentation-server.exe")
          (server-path (namestring (asdf:system-relative-pathname :presentation-server exepath))))
