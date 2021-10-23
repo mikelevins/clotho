@@ -19,18 +19,18 @@ presentation server for Lisp programs, implemented with Electron.
 
 3. Using git, clone this repository
 
-4. Build the presentation-server application
-   cd into the server directory in electron-presentation-server
+4. Build the presenter application
+   cd into the clotho/presenter directory
    run the build script (build.sh on macOS and Linux; build.bat on Windows)
 
 5. Load the Lisp code
-   Run SBCL and load presentation-server.asd
+   Run SBCL and load clotho.asd
    Eval the following forms:
 
    (asdf:load-system :clotho) ; to load the system definition
    (clotho::launch-presenter) ; to launch the Clotho presenter app
    (remote-js:eval clotho::*remote-js-context* "alert('hello!')") ; to send some Javascript to the presentation server
-   (clotho::quit-presenter) ; to ask the presenter app to quit
+   (remote-js:eval *remote-js-context* "presenter.ipcSend('quit')") ; to ask the presenter app to quit
 
 ## License
 
