@@ -2,4 +2,4 @@
 
 # remove build products
 
-rm -rf ./presentation-server-*
+rm -rf ./presenter-*

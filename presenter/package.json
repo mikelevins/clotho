@@ -1,5 +1,5 @@
 {
-    "name": "presentation-server",
+    "name": "presenter",
     "version": "0.0.1",
     "description": "A presentation server application for Lisp programs.",
     "main": "main.js",

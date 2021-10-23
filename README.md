@@ -1,7 +1,8 @@
-# electron-presentation-server
+# Clotho
 ### _mikel evins <mikel@evins.net>_
 
-An experimental presentation server for Lisp programs, implemented with Electron.
+Named after the Fate who weaves our destiny, Clotho is an experimental
+presentation server for Lisp programs, implemented with Electron.
 
 ## How to build and run it
 
@@ -26,9 +27,10 @@ An experimental presentation server for Lisp programs, implemented with Electron
    Run SBCL and load presentation-server.asd
    Eval the following forms:
 
-   (asdf:load-system :presentation-server) ; to load the system definition
-   (presentation-server::launch-presentation-server) ; to launch the presentation-server app
-   (remote-js:eval presentation-server::*remote-js-context* "alert('hello!')") ; to send some Javascript to the presentation server
+   (asdf:load-system :clotho) ; to load the system definition
+   (clotho::launch-presenter) ; to launch the Clotho presenter app
+   (remote-js:eval clotho::*remote-js-context* "alert('hello!')") ; to send some Javascript to the presentation server
+   (clotho::quit-presenter) ; to ask the presenter app to quit
 
 ## License
 

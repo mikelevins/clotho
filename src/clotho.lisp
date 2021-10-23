@@ -1,12 +1,12 @@
-;;;; presentation-server.lisp
+;;;; clotho.lisp
 
-(in-package #:presentation-server)
+(in-package #:clotho)
 
 (defparameter *http-port* 10102)
 (defparameter *websocket-port* 10101)
 
 (defparameter *http-server* (make-instance 'hunchentoot:easy-acceptor :port *http-port*))
-(defparameter *presentation-application* nil)
+(defparameter *presenter* nil)
 (defparameter *remote-js-context* nil)
 
 (hunchentoot:define-easy-handler (index :uri "/index.html") ()
@@ -20,38 +20,38 @@
     (:script (cl-markup:raw (remote-js:js *remote-js-context*))))))
 
 #+darwin
-(defun launch-presentation-server ()
+(defun launch-clotho ()
   ;; TODO: use find-port to get an open port, pass it to the Electron process on launch
   (setf *remote-js-context* (remote-js:make-context :port *websocket-port*))
   (hunchentoot:start *http-server*)
   (remote-js:start *remote-js-context*)
-  (let* ((exepath "server/presentation-server-darwin-x64/presentation-server.app/Contents/MacOS/presentation-server")
-         (server-path (namestring (asdf:system-relative-pathname :presentation-server exepath))))
-    (setf *presentation-server* (uiop:launch-program server-path))))
+  (let* ((exepath "server/clotho-darwin-x64/clotho.app/Contents/MacOS/clotho")
+         (server-path (namestring (asdf:system-relative-pathname :clotho exepath))))
+    (setf *clotho* (uiop:launch-program server-path))))
 
 #+linux
-(defun launch-presentation-server ()
+(defun launch-clotho ()
   ;; TODO: use find-port to get an open port, pass it to the Electron process on launch
   (setf *remote-js-context* (remote-js:make-context :port *websocket-port*))
   (hunchentoot:start *http-server*)
   (remote-js:start *remote-js-context*)
-  (let* ((exepath "server/presentation-server-linux-x64/presentation-server")
-         (server-path (namestring (asdf:system-relative-pathname :presentation-server exepath))))
-    (setf *presentation-server* (uiop:launch-program server-path))))
+  (let* ((exepath "server/clotho-linux-x64/clotho")
+         (server-path (namestring (asdf:system-relative-pathname :clotho exepath))))
+    (setf *clotho* (uiop:launch-program server-path))))
 
 #+win32
-(defun launch-presentation-server ()
+(defun launch-clotho ()
   ;; TODO: use find-port to get an open port, pass it to the Electron process on launch
   (setf *remote-js-context* (remote-js:make-context :address "127.0.0.1" :port *websocket-port*))
   (hunchentoot:start *http-server*)
   (remote-js:start *remote-js-context*)
-  (let* ((exepath "server/presentation-server-win32-x64/presentation-server.exe")
-         (server-path (namestring (asdf:system-relative-pathname :presentation-server exepath))))
-    (setf *presentation-server* (uiop:launch-program server-path))))
+  (let* ((exepath "server/clotho-win32-x64/clotho.exe")
+         (server-path (namestring (asdf:system-relative-pathname :clotho exepath))))
+    (setf *clotho* (uiop:launch-program server-path))))
 
-(defun terminate-presentation-server ()
-  (uiop:terminate-process *presentation-server* :urgent t))
+(defun terminate-clotho ()
+  (uiop:terminate-process *clotho* :urgent t))
 
-#+(or nil)(launch-presentation-server)
+#+(or nil)(launch-clotho)
 #+(or nil)(remote-js:eval *remote-js-context* "alert('hello!')")
-#+(or nil)(terminate-presentation-server)
+#+(or nil)(terminate-clotho)

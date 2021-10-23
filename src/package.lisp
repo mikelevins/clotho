@@ -1,5 +1,4 @@
 ;;;; package.lisp
 
-(defpackage #:presentation-server
-  (:nicknames :pres)
+(defpackage #:clotho
   (:use #:cl))
