@@ -11,10 +11,12 @@
   :license  "Apache 2.0"
   :version "0.0.2"
   :serial t
-  :depends-on (:remote-js)
+  :depends-on (:remote-js :parenscript)
   :components ((:module "src"
                         :serial t
                         :components ((:file "package")
-                                     (:file "clotho")))))
+                                     (:file "parameters")
+                                     (:file "http")
+                                     (:file "launch")))))
 
 #+(or nil)(asdf:load-system :clotho)
