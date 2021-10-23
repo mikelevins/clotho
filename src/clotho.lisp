@@ -49,9 +49,6 @@
          (server-path (namestring (asdf:system-relative-pathname :clotho exepath))))
     (setf *clotho* (uiop:launch-program server-path))))
 
-(defun terminate-clotho ()
-  (uiop:terminate-process *clotho* :urgent t))
-
 #+(or nil)(launch-clotho)
 #+(or nil)(remote-js:eval *remote-js-context* "alert('hello!')")
-#+(or nil)(terminate-clotho)
+#+(or nil)(remote-js:eval *remote-js-context* "app.quit()")
