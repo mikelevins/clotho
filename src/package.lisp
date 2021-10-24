@@ -1,4 +1,4 @@
 ;;;; package.lisp
 
 (defpackage #:clotho
-  (:use #:cl))
+  (:use #:cl #:ps))

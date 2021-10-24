@@ -2,6 +2,8 @@
 
 (in-package #:clotho)
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (setq cl-who:*attribute-quote-char* #\"))
 
 (hunchentoot:define-easy-handler (index :uri "/index.html") ()
   (setf (hunchentoot:content-type*) "text/html")
@@ -16,13 +18,20 @@
       (:script :src "js/htmx.min.js")
       (:script :src "js/fabric.min.js")
       (:script (cl-who:str (remote-js:js *remote-js-context*)))
-      (:button :hx-get "/clicktest"
-               :hx-swap "outerHTML"
-               "Test")
-      #|(:canvas :id "drawing-board"
-      :width "400" :height "400"
-      :style "border:1px solid #000000;")|#
-      ))
+      (:div
+       (:button :hx-get "/clicktest"
+                :hx-swap "outerHTML"
+                "Test"))
+      (:div
+       (:canvas :id "drawing-board"
+                :width "400" :height "400"
+                :style "border:1px solid #000000;"))
+      (:div
+       (:button :onclick "
+var canvas=new fabric.Canvas('drawing-board');
+var circle = new fabric.Circle({radius: 20, fill: 'green', left: 100, top: 100}); 
+canvas.add(circle);"
+                "Draw a Circle"))))
     out))
 
 (hunchentoot:define-easy-handler (clicktest :uri "/clicktest") ()
