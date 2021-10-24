@@ -14,7 +14,7 @@
       (:title "Clotho"))
      (:body
       (:script :src "js/htmx.min.js")
-      #|(:script :src "js/fabric.min.js")|#
+      (:script :src "js/fabric.min.js")
       (:script (cl-who:str (remote-js:js *remote-js-context*)))
       (:button :hx-get "/clicktest"
                :hx-swap "outerHTML"
