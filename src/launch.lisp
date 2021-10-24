@@ -38,6 +38,11 @@
                                    presenter-path *http-port* *websocket-port*)))
     (setf *presenter* (uiop:launch-program presenter-string))))
 
+#+win32
+(defun quit-presenter ()
+  (remote-js:eval *remote-js-context* "presenter.ipcSend('quit')")
+  (hunchentoot:stop *http-server*))
+
 #+(or nil)(launch-presenter)
 #+(or nil)(remote-js:eval *remote-js-context* "alert('hello!')")
-#+(or nil)(remote-js:eval *remote-js-context* "presenter.ipcSend('quit')")
+#+(or nil)(quit-presenter)
