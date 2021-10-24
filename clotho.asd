@@ -11,7 +11,7 @@
   :license  "Apache 2.0"
   :version "0.0.2"
   :serial t
-  :depends-on (:remote-js :parenscript)
+  :depends-on (:remote-js :parenscript :cl-who)
   :components ((:module "src"
                         :serial t
                         :components ((:file "package")

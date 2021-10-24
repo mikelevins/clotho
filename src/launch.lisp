@@ -26,21 +26,27 @@
 
 #+win32
 (defun launch-presenter ()
-  (setf *http-port* (get-available-port))
-  (setf *websocket-port* (get-available-port))
-  (setf *remote-js-context* (remote-js:make-context :address "127.0.0.1" :port *websocket-port*))
-  (setf *http-server* (make-instance 'hunchentoot:easy-acceptor :port *http-port*))
-  (hunchentoot:start *http-server*)
-  (remote-js:start *remote-js-context*)
-  (let* ((exepath "presenter/presenter-win32-x64/presenter.exe")
-         (presenter-path (namestring (asdf:system-relative-pathname :clotho exepath)))
-         (presenter-string (format nil "~A --http-port ~A --ws-port ~A"
-                                   presenter-path *http-port* *websocket-port*)))
-    (setf *presenter* (uiop:launch-program presenter-string))))
+  (let ((document-root-path (asdf:system-relative-pathname :clotho "resources/"))
+        (error-template-path (asdf:system-relative-pathname :clotho "resources/errors/")))
+   (setf *http-port* (get-available-port))
+   (setf *websocket-port* (get-available-port))
+   (setf *remote-js-context* (remote-js:make-context :address "127.0.0.1" :port *websocket-port*))
+    (setf *http-server* (make-instance 'hunchentoot:easy-acceptor
+                                       :port *http-port*
+                                       :document-root document-root-path
+                                       :error-template-directory error-template-path))
+   (hunchentoot:start *http-server*)
+    (remote-js:start *remote-js-context*)
+   (let* ((exepath "presenter/presenter-win32-x64/presenter.exe")
+          (presenter-path (namestring (asdf:system-relative-pathname :clotho exepath)))
+          (presenter-string (format nil "~A --http-port ~A --ws-port ~A"
+                                    presenter-path *http-port* *websocket-port*)))
+     (setf *presenter* (uiop:launch-program presenter-string)))))
 
 #+win32
 (defun quit-presenter ()
   (remote-js:eval *remote-js-context* "presenter.ipcSend('quit')")
+  (remote-js:stop *remote-js-context*)
   (hunchentoot:stop *http-server*))
 
 #+(or nil)(launch-presenter)
