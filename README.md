@@ -21,7 +21,8 @@ presentation server for Lisp programs, implemented with Electron.
 
 4. Build the presenter application
    cd into the clotho/presenter directory
-   run the build script (build.sh on macOS and Linux; build.bat on Windows)
+   If you're on Windows, run npm-install.bat, using CMD
+   run the build script (build.sh in bash on macOS and Linux; build.bat in CMD on Windows)
 
 5. Load the Lisp code
    Run SBCL and load clotho.asd
