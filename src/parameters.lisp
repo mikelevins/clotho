@@ -27,3 +27,6 @@
 (defparameter *presenter* nil) ; the Electron presentation server
 (defparameter *remote-js-context* nil) ; the Lisp connection to Electron's Javascript evaluator
 
+(defparameter *lisp-logfile* (asdf:system-relative-pathname :clotho "lisp.log"))
+(defparameter *electron-logfile* (asdf:system-relative-pathname :clotho "electron.log"))
+

@@ -6,6 +6,7 @@
   (setq cl-who:*attribute-quote-char* #\"))
 
 (hunchentoot:define-easy-handler (index :uri "/index.html") ()
+  (log-message "hunchentoot handler: index called")
   (setf (hunchentoot:content-type*) "text/html")
   (cl-who:with-html-output-to-string (out nil :prologue t)
     (:html 
@@ -35,6 +36,7 @@ canvas.add(circle);"
     out))
 
 (hunchentoot:define-easy-handler (clicktest :uri "/clicktest") ()
+  (log-message "hunchentoot handler: clicktest called")
   (setf (hunchentoot:content-type*) "text/html")
   (cl-who:with-html-output-to-string (out nil :prologue nil)
     (:p "Test succeeded!")

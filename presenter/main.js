@@ -6,6 +6,7 @@ const path = require('path');
 const yargs = require('yargs');
 const http = require('http');
 const fs = require('fs');
+const log = require('electron-log');
 
 const clients = new Set();
 
@@ -39,14 +40,15 @@ function createWindow () {
             enableRemoteModule: false, // turn off remote
             preload: path.join(__dirname, "js/preload.js") // use a preload script
         }        
-        
     })
-
-    // 
+    log.info('presenter: main window created');
     win.loadURL('http://127.0.0.1:'+httpPort+'/index.html')
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+    log.info('presenter ready; creating the window');
+    createWindow();
+});
 
 app.on('window-all-closed', function () {
     if (process.platform !== 'darwin') app.quit()
@@ -55,4 +57,7 @@ app.on('window-all-closed', function () {
 
 // handlers for events from the Renderer process
 
-ipcMain.on("quit", (event,data) => { app.quit(); });
+ipcMain.on("quit", (event,data) => {
+    log.info('quitting the presenter');
+    app.quit();
+});

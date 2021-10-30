@@ -28,25 +28,42 @@
 (defun launch-presenter ()
   (let ((document-root-path (asdf:system-relative-pathname :clotho "resources/"))
         (error-template-path (asdf:system-relative-pathname :clotho "resources/errors/")))
-   (setf *http-port* (get-available-port))
-   (setf *websocket-port* (get-available-port))
-   (setf *remote-js-context* (remote-js:make-context :address "127.0.0.1" :port *websocket-port*))
+    (setf *http-port* (get-available-port))
+    (log-message "*http-port* set to ~S" *http-port*)
+    
+    (setf *websocket-port* (get-available-port))
+    (log-message "*websocket-port* set to ~S" *websocket-port*)
+
+    (setf *remote-js-context* (remote-js:make-context :address "127.0.0.1" :port *websocket-port*))
+    (log-message "*remote-js-context* set to ~S" *remote-js-context*)
+
     (setf *http-server* (make-instance 'hunchentoot:easy-acceptor
                                        :port *http-port*
                                        :document-root document-root-path
                                        :error-template-directory error-template-path))
-   (hunchentoot:start *http-server*)
+    (log-message "*http-server* set to ~S" *http-server*)
+
+    (hunchentoot:start *http-server*)
+    (log-message "*http-server* started")
+
     (remote-js:start *remote-js-context*)
-   (let* ((exepath "presenter/presenter-win32-x64/presenter.exe")
-          (presenter-path (namestring (asdf:system-relative-pathname :clotho exepath)))
-          (presenter-string (format nil "~A --http-port ~A --ws-port ~A"
-                                    presenter-path *http-port* *websocket-port*)))
-     (setf *presenter* (uiop:launch-program presenter-string)))))
+    (log-message "remote-js context started")
+
+    (let* ((exepath "presenter/presenter-win32-x64/presenter.exe")
+           (presenter-path (namestring (asdf:system-relative-pathname :clotho exepath)))
+           (presenter-string (format nil "~A --http-port ~A --ws-port ~A"
+                                     presenter-path *http-port* *websocket-port*)))
+      (log-message "starting presenter: ~S" presenter-string)
+      (setf *presenter* (uiop:launch-program presenter-string))
+      (log-message "presenter started: ~S" (with-output-to-string (out)(describe *presenter* out))))))
 
 #+win32
 (defun quit-presenter ()
+  (log-message "sending quit message to presenter")
   (remote-js:eval *remote-js-context* "presenter.ipcSend('quit')")
+  (log-message "stopping the remote-js context")
   (remote-js:stop *remote-js-context*)
+  (log-message "stopping the http server")
   (hunchentoot:stop *http-server*))
 
 #+(or nil)(launch-presenter)
