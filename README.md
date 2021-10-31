@@ -29,8 +29,11 @@ presentation server for Lisp programs, implemented with Electron.
    Eval the following forms:
 
    (asdf:load-system :clotho) ; to load the system definition
+
    (clotho::launch-presenter) ; to launch the Clotho presenter app
+
    (remote-js:eval clotho::*remote-js-context* "alert('hello!')") ; to send some Javascript to the presentation server
+
    (remote-js:eval *remote-js-context* "presenter.ipcSend('quit')") ; to ask the presenter app to quit
 
 ## License
