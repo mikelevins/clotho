@@ -1,6 +1,6 @@
 // the presentation server main process
 
-const { app, BrowserWindow, dialog, ipcMain, Menu } = require('electron');
+const { app, crashReporter, BrowserWindow, dialog, ipcMain, Menu } = require('electron');
 const process = require('process');
 const path = require('path');
 const yargs = require('yargs');
@@ -61,3 +61,16 @@ ipcMain.on("quit", (event,data) => {
     log.info('quitting the presenter');
     app.quit();
 });
+
+// crashReporter setup
+// on an Electron crash
+
+// put crashdumps in clotho/crashdumps
+// the path is relative to the directory containing main.js in the built presenter,
+// which is clotho/presenter/presenter-<platform>/resources/app/
+app.setPath('crashDumps',path.join(__dirname, '../../../../crashdumps/'));
+console.log(`Crash dumps directory: ${app.getPath('crashDumps')}`);
+crashReporter.start({
+  submitURL: "https://example.com",
+  uploadToServer: false,
+})
